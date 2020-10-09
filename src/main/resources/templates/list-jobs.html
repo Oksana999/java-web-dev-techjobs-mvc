@@ -1,18 +1,65 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head">
+    <link th:href="@{/css/joblisting.css}" rel="stylesheet"/>
 </head>
 <body>
 
 <div th:replace="fragments :: page-header"></div>
 
-<div class="container body-content">
+<td class="container body-content">
 
     <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
 
-    <!-- TODO #1 - Use a loop to display job results in a table. -->
 
-</div>
+    <th:block th:each="job:${jobs}">
+
+        <table>
+
+            <tr>
+                <td class="td-width">ID:</td>
+
+                <td class="td-italic" th:text="${job.getId()}"></td>
+
+            </tr>
+
+            <tr>
+                <td class="td-width">Name:</td>
+
+                <td class="td-italic" th:text="${job.getName()}"></td>
+
+            </tr>
+
+            <tr>
+                <td class="td-width">Employer:</td>
+                <td class="td-italic"><a th:href="@{/list/jobfield(value=${job.getEmployer()})}"
+                                         th:text="${job.getEmployer()}"></a></td>
+            </tr>
+
+            <tr>
+                <td class="td-width">Location:</td>
+                <td class="td-italic"><a th:href="@{/list/jobfield(value=${job.getLocation()})}"
+                                         th:text="${job.getLocation()}"></a></td>
+            </tr>
+
+            <tr>
+                <td class="td-width">Core Competency:</td>
+                <td class="td-italic"><a th:href="@{/list/jobfield(value=${job.getCoreCompetency()})}"
+                                         th:text="${job.getCoreCompetency()}"></a></td>
+            </tr>
+
+            <tr>
+                <td class="td-width">Position Type:</td>
+                <td class="td-italic"><a th:href="@{/list/jobfield(value=${job.getPositionType()})}"
+                                         th:text="${job.getPositionType()}"></a></td>
+            </tr>
+
+        </table>
+        <br><br>
+    </th:block>
+
+</td>
+
 
 </body>
 </html>

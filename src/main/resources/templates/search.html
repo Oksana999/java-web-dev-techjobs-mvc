@@ -10,17 +10,18 @@
 
     <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
 
-    <form th:action="@{/search/results}" method = "post">
+    <form th:action="@{/search/results}" method="post">
         <h2>Search by:</h2>
 
         <p>
             <span th:each="column : ${columns}">
+
                 <input
                         type="radio"
                         name="searchType"
                         th:id="${column.key}"
                         th:value="${column.key}"
-                        th:checked="${column.key == 'all'}"/>
+                        th:checked="${column.key == searchType?true:column.key == 'all'}"/>
                 <label th:for="${column.key}" th:text="${column.value}"></label>
             </span>
 
@@ -28,17 +29,46 @@
 
         <p>
             <label for="searchTerm">Keyword:</label>
-            <input type="text" name="searchTerm" id="searchTerm" />
+            <input th:value="${searchTerm}" type="text" name="searchTerm" id="searchTerm"/>
         </p>
 
-        <input type="submit" value="Search" />
+        <input type="submit" value="Search"/>
     </form>
 
-    <hr />
+    <hr/>
 
-    <!-- TODO #4 - Loop over the search results to display all job fields. -->
+    <th:block th:each="job:${jobs}">
+        <table>
+            <tr>
+                <td class="td-width"><span class="bold" th:text="${#strings.capitalizeWords('ID:')}"></span></td>
+                <td class="td-italic" th:text="${job.getId()}"></td>
+            </tr>
+            <tr>
+                <td class="td-width"><span class="bold" th:text="${#strings.capitalizeWords('Name:')}"></span></td>
+                <td class="td-italic" th:text="${job.getName()}"></td>
+            </tr>
+            <tr>
+                <td class="td-width"><span class="bold" th:text="${#strings.capitalizeWords('Employer:')}"></span></td>
+                <td class="td-italic" th:text="${job.getEmployer()}"></td>
+            </tr>
+            <tr>
+                <td class="td-width"><span class="bold" th:text="${#strings.capitalizeWords('Location:')}"></span></td>
+                <td class="td-italic" th:text="${job.getLocation()}"></td>
+            </tr>
+            <tr>
+                <td class="td-width"><span class="bold"
+                                           th:text="${#strings.capitalizeWords('Core Competency:')}"></span></td>
+                <td class="td-italic" th:text="${job.getCoreCompetency()}"></td>
+            </tr>
+            <tr>
+                <td class="td-width"><span class="bold" th:text="${#strings.capitalizeWords('Position Type:')}"></span>
+                </td>
+                <td class="td-italic" th:text="${job.getPositionType()}"></td>
+            </tr>
 
+        </table>
+        <br><br>
+    </th:block>
 </div>
-
 </body>
 </html>
